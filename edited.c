@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h>
@@ -85,6 +86,7 @@ void saveData();
 void drawLine(int x1, int y1, int x2, int y2, const char *symbol);
 void drawModule();
 void initialize();
+void title();
 
 void animalGrowth();
 void plantGrowth();
@@ -147,6 +149,7 @@ int main()
                         {
                             animalGrowth();
                         }
+                        saveData();
                         break;
 
                     case 7:
@@ -154,6 +157,7 @@ int main()
                         {
                             plantGrowth();
                         }
+                        saveData();
                         break;
 
                     case 14:
@@ -161,6 +165,7 @@ int main()
                         {
                             making();
                         }
+                        saveData();
                         break;
 
                     case 21:
@@ -168,22 +173,29 @@ int main()
                         {
                             game();
                         }
+                        saveData();
                         break;
 
                     case 28:
                         sleep();
+                        saveData();
                         break;
 
                     case 35:
                         achievement();
+                        saveData();
                         break;
 
                     case 42:
-                        store();
+                        if(checkStatus()){
+                            store();    
+                        }
+                        saveData();
                         break;
 
                     case 49:
                         inventory();
+                        saveData();
                         break;
 
                     case 56:
@@ -705,6 +717,9 @@ void achievement()
     return;
 }
 void store() {
+    if(!checkStatus()){
+        return;
+    }
     int menuChoose =28;
     int choice;
     int execute;
@@ -718,7 +733,7 @@ void store() {
     gotoxy(28, 22, "동물");
     gotoxy(35, 22, "작물");
     gotoxy(42, 22, "DIY재료");
-    gotoxy(49, 25, "나가기");
+    gotoxy(49, 22, "나가기");
     gotoxy(49, 25, "");
         printf("현재 돈: %d", currentStatus.money);
     while (1) {
@@ -734,7 +749,7 @@ void store() {
                 }
             }
             else if (choice == RIGHT) {
-                if (menuChoose < 42) {
+                if (menuChoose < 49) {
                     menuChoose += 7;
                 }
             }
@@ -795,6 +810,7 @@ void store() {
                             else {
                                 printf("돈이 부족합니다.");
                             }
+                            currentStatus.work--;
                             Sleep(1000);
                         }
                         break;
@@ -810,6 +826,7 @@ void store() {
                             else {
                                 printf("돈이 부족합니다.");
                             }
+                            currentStatus.work--;
                             Sleep(1000);
                         }
                         break;
@@ -825,6 +842,7 @@ void store() {
                             else {
                                 printf("돈이 부족합니다.");
                             }
+                            currentStatus.work--;
                             Sleep(1000);
                         }
                         break;
@@ -840,6 +858,7 @@ void store() {
                             else {
                                 printf("돈이 부족합니다.");
                             }
+                            currentStatus.work--;
                             Sleep(1000);
                         }
                         break;
@@ -855,6 +874,7 @@ void store() {
                             else {
                                 printf("돈이 부족합니다.");
                             }
+                            currentStatus.work--;
                             Sleep(1000);
                         }
                         break;
@@ -922,6 +942,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -937,6 +958,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -952,6 +974,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -967,6 +990,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -982,6 +1006,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -997,12 +1022,12 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
 
         }
-        break;
         break;
     case 42:
         system("cls");
@@ -1063,6 +1088,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -1078,6 +1104,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -1093,6 +1120,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -1108,6 +1136,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -1123,6 +1152,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -1138,6 +1168,7 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
             }
             break;
@@ -1153,41 +1184,71 @@ void store() {
                 else {
                     printf("돈이 부족합니다.");
                 }
+                currentStatus.work--;
                 Sleep(1000);
-            }
+            }   
             break;
         }
-    
+    case 49: break;
+        
     }
-    currentStatus.work--;
     return;
 }
 void inventory()
 {
     system("cls");
-    gotoxy(0, 0, "");
+    drawLine(0, 0, 74, 0, "■");
+    drawLine(0, 0, 0, 17, "■");
+    drawLine(74, 0, 74, 17, "■");
+    drawLine(0, 74, 74, 74, "■");
+    gotoxy(1,2,"<동물>");
     for (int i = 0; i < 5; i++)
     {
-        printf("%d ", inventoryStatus.animalNumber[i]);
+        gotoxy(1+i*5,3, inventoryStatus.animal[i]);
     }
-    printf("\n");
     for (int i = 0; i < 5; i++)
     {
-        printf("%d ", inventoryStatus.plantNumber[i]);
+        gotoxy(1+i*5,4, "");
+        printf("%d",inventoryStatus.animalNumber[i]);
     }
-    printf("\n");
-    for (int i = 0; i < 7; i++)
-    {
-        printf("%d ", inventoryStatus.diyNumber[i]);
-    }
-    printf("\n");
-    for (int i = 0; i < 7; i++)
-    {
-        printf("%d ", inventoryStatus.ingredientNumber[i]);
-    }
-    printf("\n");
 
-    Sleep(1000);
+    gotoxy(1,6,"<식물>");
+    for (int i = 0; i < 5; i++)
+    {
+        gotoxy(1+i*5,7, inventoryStatus.plant[i]);
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        gotoxy(1+i*5,8, "");
+        printf("%d",inventoryStatus.plantNumber[i]);
+    }
+
+    gotoxy(1,10,"<소지품>");
+    for (int i = 0; i < 7; i++)
+    {
+        gotoxy(1+i*5,11, inventoryStatus.diy[i]);
+    }
+    for (int i = 0; i < 7; i++)
+    {
+        gotoxy(1+i*5,12, "");
+        printf("%d",inventoryStatus.diyNumber[i]);
+    }
+
+    gotoxy(1,14,"<재료>");
+    for (int i = 0; i < 7; i++)
+    {
+        gotoxy(1+i*5,15, inventoryStatus.ingredient[i]);
+    }
+    for (int i = 0; i < 7; i++)
+    {
+        gotoxy(1+i*5,16, "");
+        printf("%d",inventoryStatus.ingredientNumber[i]);
+    }
+    
+    gotoxy(0,20,"아무키나 누르십시오...");
+    
+    while(!_kbhit());
+    getchar();
     return;
 }
 void saveAndExit()
@@ -1255,4 +1316,32 @@ void initialize()
     inventoryStatus.ingredientNumber[4] = 0;
     inventoryStatus.ingredientNumber[5] = 0;
     inventoryStatus.ingredientNumber[6] = 0;
+}
+
+void title()
+{
+    gotoxy(0, 0, "");
+    drawLine(0, 0, 74, 0, "■");
+    drawLine(0, 0, 0, 17, "■");
+    drawLine(74, 0, 74, 17, "■");
+    drawLine(0, 74, 74, 74, "■");
+
+    gotoxy(10, 5, "                  ###      ##     #######   ##        #####      ##      #####    ##       ");
+    gotoxy(10, 6, "                #######    ##           #   ##     ###     ###   ##        ###    ##       ");
+    gotoxy(10, 7, "                 ###       ##     #######   ##     ###     ###   ##      ##  ##   ##       ");
+    gotoxy(10, 8, "                ##  ##     ##     #         ##     ###     ###   ##     ##    ##  ##       ");
+    gotoxy(10, 9, "                 ###       ##     #######   ##        #####      ##                        ");
+    gotoxy(10, 10, "                   ########                                      ##       ###   ###        ");
+    gotoxy(10, 11, "                          #          ######       ##################      ###   ###        ");
+    gotoxy(10, 12, "                   ########         ##    ##                     ##       #########        ");
+    gotoxy(10, 13, "                   #                ##    ##                     ##       ###   ###        ");
+    gotoxy(10, 14, "                   ########          ######                      ##       #########        ");
+
+    while (!_kbhit())
+    {
+        gotoxy(7, 16, "                             <      PRESS      ENTER      KEY      TO      START      >    ");
+        Sleep(400);
+        gotoxy(7, 16, "                                                                                         ");
+        Sleep(400);
+    }
 }
