@@ -96,8 +96,7 @@ void store();
 void inventory();
 void saveAndExit();
 
-char *character[4] = {"\\(*_*)", "(   (>", "(   )", "/   \\"};
-char *characterClear[4] = {"       ", "       ", "       ", "       "};
+const char *character[4] = {"\\(*_*)", "(   (>", "(   )", "/   \\"};
 
 int main()
 {
@@ -705,12 +704,462 @@ void achievement()
     Sleep(1000);
     return;
 }
-void store()
-{
+void store() {
+    int menuChoose =28;
+    int choice;
+    int execute;
     system("cls");
-    gotoxy(0, 0, "store");
+    gotoxy(0, 0, "");
+    drawModule(2, 14, character, 4);
+    drawLine(0, 0, 74, 0, "■");
+    drawLine(0, 0, 0, 17, "■");
+    drawLine(74, 0, 74, 17, "■");
+    drawLine(0, 74, 74, 74, "■");
+    gotoxy(28, 22, "동물");
+    gotoxy(35, 22, "작물");
+    gotoxy(42, 22, "DIY재료");
+    gotoxy(49, 25, "나가기");
+    gotoxy(49, 25, "");
+        printf("현재 돈: %d", currentStatus.money);
+    while (1) {
+        gotoxy(menuChoose, 22, "");
+        if (_kbhit()) {
+            choice = _getch();
+            if (choice != LEFT && choice != RIGHT && choice != ENTER) {
+                continue;
+            }
+            if (choice == LEFT) {
+                if (menuChoose > 28) {
+                    menuChoose -= 7;
+                }
+            }
+            else if (choice == RIGHT) {
+                if (menuChoose < 42) {
+                    menuChoose += 7;
+                }
+            }
+            else {
+                break;
+            }
+        }
+    }
+    switch (menuChoose) {
+    case 28:
+        system("cls");
+        gotoxy(0, 0, "");
+        drawModule(2, 14, character, 4);
+        drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+        gotoxy(21, 22, "강아지");
+        gotoxy(28, 22, "고양이");
+        gotoxy(35, 22, "펭귄");
+        gotoxy(42, 22, "햄스터");
+        gotoxy(49, 22, "병아리");
+        gotoxy(21, 23, "$100000");
+        gotoxy(28, 23, "$100000");
+        gotoxy(35, 23, "$100000");
+        gotoxy(42, 23, "$100000");
+        gotoxy(49, 23, "$100000");
+
+        gotoxy(49, 25, "");
+        printf("현재 돈: %d", currentStatus.money);
+        while (1) {
+            gotoxy(menuChoose, 22, "");
+            if (_kbhit()) {
+                choice = _getch();
+                if (choice != LEFT && choice != RIGHT && choice != ENTER) {
+                    continue;
+                }
+                if (choice == LEFT) {
+                    if (menuChoose > 21) {
+                        menuChoose -= 7;
+                    }
+                }
+                else if (choice == RIGHT) {
+                    if (menuChoose < 49) {
+                        menuChoose += 7;
+                    }
+                }
+                else {
+                    switch (menuChoose) {
+                    case 21:
+                        if (checkStatus()) {
+                            if (currentStatus.money >= 100000) {
+                                currentStatus.money -= 100000;
+                                system("cls");
+                                gotoxy(35, 25, "구매완료");
+                                inventoryStatus.animalNumber[0]++;
+                            }
+                            else {
+                                printf("돈이 부족합니다.");
+                            }
+                            Sleep(1000);
+                        }
+                        break;
+
+                    case 28:
+                        if (checkStatus()) {
+                            if (currentStatus.money >= 100000) {
+                                currentStatus.money -= 100000;
+                                system("cls");
+                                gotoxy(35, 25, "구매완료");
+                                inventoryStatus.animalNumber[1]++;
+                            }
+                            else {
+                                printf("돈이 부족합니다.");
+                            }
+                            Sleep(1000);
+                        }
+                        break;
+
+                    case 35:
+                        if (checkStatus()) {
+                            if (currentStatus.money >= 100000) {
+                                currentStatus.money -= 100000;
+                                system("cls");
+                                gotoxy(35, 25, "구매완료");
+                                inventoryStatus.animalNumber[2]++;
+                            }
+                            else {
+                                printf("돈이 부족합니다.");
+                            }
+                            Sleep(1000);
+                        }
+                        break;
+
+                    case 42:
+                        if (checkStatus()) {
+                            if (currentStatus.money >= 100000) {
+                                currentStatus.money -= 100000;
+                                system("cls");
+                                gotoxy(35, 25, "구매완료");
+                                inventoryStatus.animalNumber[3]++;
+                            }
+                            else {
+                                printf("돈이 부족합니다.");
+                            }
+                            Sleep(1000);
+                        }
+                        break;
+
+                    case 49:
+                        if (checkStatus()) {
+                            if (currentStatus.money >= 100000) {
+                                currentStatus.money -= 100000;
+                                system("cls");
+                                gotoxy(35, 25, "구매완료");
+                                inventoryStatus.animalNumber[4]++;
+                            }
+                            else {
+                                printf("돈이 부족합니다.");
+                            }
+                            Sleep(1000);
+                        }
+                        break;
+
+                    }
+                    break;
+                }
+
+            }
+        }
+        break;
+    case 35:
+        system("cls");
+        gotoxy(0, 0, "");
+        drawModule(2, 14, character, 4);
+        drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+        gotoxy(21, 22, "방울토마토");
+        gotoxy(28, 22, "고추");
+        gotoxy(35, 22, "상추");
+        gotoxy(42, 22, "부추");
+        gotoxy(49, 22, "완두콩");
+        gotoxy(56, 22, "콩나물");
+        gotoxy(21, 23, "$30000");
+        gotoxy(28, 23, "$30000");
+        gotoxy(35, 23, "$30000");
+        gotoxy(42, 23, "$30000");
+        gotoxy(49, 23, "$30000");
+        gotoxy(56, 23, "$30000");
+        gotoxy(49, 25, "");
+        printf("현재 돈: %d", currentStatus.money);
+        while (1) {
+            gotoxy(menuChoose, 22, "");
+            if (_kbhit()) {
+                choice = _getch();
+                if (choice != LEFT && choice != RIGHT && choice != ENTER) {
+                    continue;
+                }
+                if (choice == LEFT) {
+                    if (menuChoose > 21) {
+                        menuChoose -= 7;
+                    }
+                }
+                else if (choice == RIGHT) {
+                    if (menuChoose < 56) {
+                        menuChoose += 7;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        switch (menuChoose) {
+        case 21:
+            if (checkStatus()) {
+                if (currentStatus.money >= 30000) {
+                    currentStatus.money -= 30000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.plantNumber[0]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 28:
+            if (checkStatus()) {
+                if (currentStatus.money >= 30000) {
+                    currentStatus.money -= 30000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.plantNumber[1]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 35:
+            if (checkStatus()) {
+                if (currentStatus.money >= 30000) {
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.plantNumber[2]++;
+                    currentStatus.money -= 30000;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 42:
+            if (checkStatus()) {
+                if (currentStatus.money >= 30000) {
+                    currentStatus.money -= 30000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.plantNumber[3]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 49:
+            if (checkStatus()) {
+                if (currentStatus.money >= 30000) {
+                    currentStatus.money -= 30000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.plantNumber[4]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 56:
+            if (checkStatus()) {
+                if (currentStatus.money >= 30000) {
+                    currentStatus.money -= 30000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.plantNumber[5]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        }
+        break;
+        break;
+    case 42:
+        system("cls");
+        gotoxy(0, 0, "");
+        drawModule(2, 14, character, 4);
+        drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+        gotoxy(14, 22, "나무");
+        gotoxy(21, 22, "철");
+        gotoxy(28, 22, "못");
+        gotoxy(35, 22, "플라스틱");
+        gotoxy(42, 22, "드라이버");
+        gotoxy(49, 22, "나사");
+        gotoxy(56, 22, "얼음덩어리");
+        gotoxy(49, 25, "");
+        gotoxy(14, 23, "$20000");
+        gotoxy(21, 23, "$20000");
+        gotoxy(28, 23, "$10000");
+        gotoxy(35, 23, "$20000");
+        gotoxy(42, 23, "$30000");
+        gotoxy(49, 23, "$10000");
+        gotoxy(56, 23, "$10000");
+        gotoxy(49, 25, "");
+        printf("현재 돈: %d", currentStatus.money);
+        while (1) {
+            gotoxy(menuChoose, 22, "");
+            if (_kbhit()) {
+                choice = _getch();
+                if (choice != LEFT && choice != RIGHT && choice != ENTER) {
+                    continue;
+                }
+                if (choice == LEFT) {
+                    if (menuChoose > 14) {
+                        menuChoose -= 7;
+                    }
+                }
+                else if (choice == RIGHT) {
+                    if (menuChoose < 56) {
+                        menuChoose += 7;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        switch (menuChoose) {
+        case 14:
+            if (checkStatus()) {
+                if (currentStatus.money >= 20000) {
+                    currentStatus.money -= 20000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.ingredientNumber[0]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 21:
+            if (checkStatus()) {
+                if (currentStatus.money >= 20000) {
+                    currentStatus.money -= 20000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.ingredientNumber[1]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 28:
+            if (checkStatus()) {
+                if (currentStatus.money >= 10000) {
+                    currentStatus.money -= 10000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.ingredientNumber[2]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 35:
+            if (checkStatus()) {
+                if (currentStatus.money >= 20000) {
+                    currentStatus.money -= 20000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.ingredientNumber[3]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 42:
+            if (checkStatus()) {
+                if (currentStatus.money >= 30000) {
+                    currentStatus.money -= 30000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.ingredientNumber[4]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 49:
+            if (checkStatus()) {
+                if (currentStatus.money >= 10000) {
+                    currentStatus.money -= 10000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.ingredientNumber[5]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+
+        case 56:
+            if (checkStatus()) {
+                if (currentStatus.money >= 10000) {
+                    currentStatus.money -= 10000;
+                    system("cls");
+                    gotoxy(35, 25, "구매완료");
+                    inventoryStatus.ingredientNumber[6]++;
+                }
+                else {
+                    printf("돈이 부족합니다.");
+                }
+                Sleep(1000);
+            }
+            break;
+        }
+    
+    }
     currentStatus.work--;
-    Sleep(1000);
     return;
 }
 void inventory()
@@ -753,6 +1202,8 @@ void saveAndExit()
 
 void initialize()
 {
+    currentStatus.money = 100000;
+
     inventoryStatus.animal[0] = "강아지";
     inventoryStatus.animal[1] = "고양이";
     inventoryStatus.animal[2] = "펭귄";
@@ -780,28 +1231,28 @@ void initialize()
 
 
 
-    inventoryStatus.animalNumber[0] = 12;
-    inventoryStatus.animalNumber[1] = 23;
-    inventoryStatus.animalNumber[2] = 45;
-    inventoryStatus.animalNumber[3] = 56;
-    inventoryStatus.animalNumber[4] = 56;
-    inventoryStatus.plantNumber[0] = 64;
-    inventoryStatus.plantNumber[1] = 34;
-    inventoryStatus.plantNumber[2] = 34;
-    inventoryStatus.plantNumber[3] = 45;
-    inventoryStatus.plantNumber[4] = 655;
-    inventoryStatus.diyNumber[0] = 34;
-    inventoryStatus.diyNumber[1] = 56;
-    inventoryStatus.diyNumber[2] = 676;
-    inventoryStatus.diyNumber[3] = 56;
-    inventoryStatus.diyNumber[4] = 45;
-    inventoryStatus.diyNumber[5] = 67;
-    inventoryStatus.diyNumber[6] = 23;
-    inventoryStatus.ingredientNumber[0] = 45;
-    inventoryStatus.ingredientNumber[1] = 67;
-    inventoryStatus.ingredientNumber[2] = 578;
-    inventoryStatus.ingredientNumber[3] = 564;
-    inventoryStatus.ingredientNumber[4] = 34;
-    inventoryStatus.ingredientNumber[5] = 65;
-    inventoryStatus.ingredientNumber[6] = 34;
+    inventoryStatus.animalNumber[0] = 0;
+    inventoryStatus.animalNumber[1] = 0;
+    inventoryStatus.animalNumber[2] = 0;
+    inventoryStatus.animalNumber[3] = 0;
+    inventoryStatus.animalNumber[4] = 0;
+    inventoryStatus.plantNumber[0] = 0;
+    inventoryStatus.plantNumber[1] = 0;
+    inventoryStatus.plantNumber[2] = 0;
+    inventoryStatus.plantNumber[3] = 0;
+    inventoryStatus.plantNumber[4] = 0;
+    inventoryStatus.diyNumber[0] = 0;
+    inventoryStatus.diyNumber[1] = 0;
+    inventoryStatus.diyNumber[2] = 0;
+    inventoryStatus.diyNumber[3] = 0;
+    inventoryStatus.diyNumber[4] = 0;
+    inventoryStatus.diyNumber[5] = 0;
+    inventoryStatus.diyNumber[6] = 0;
+    inventoryStatus.ingredientNumber[0] = 0;
+    inventoryStatus.ingredientNumber[1] = 0;
+    inventoryStatus.ingredientNumber[2] = 0;
+    inventoryStatus.ingredientNumber[3] = 0;
+    inventoryStatus.ingredientNumber[4] = 0;
+    inventoryStatus.ingredientNumber[5] = 0;
+    inventoryStatus.ingredientNumber[6] = 0;
 }
