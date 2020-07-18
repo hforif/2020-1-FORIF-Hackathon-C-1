@@ -90,6 +90,7 @@ void drawLine(int x1, int y1, int x2, int y2, const char *symbol);
 void drawModule();
 void initialize();
 void title();
+void story();
 
 void animalGrowth();
 void plantGrowth();
@@ -874,7 +875,7 @@ void store() {
     drawLine(74, 0, 74, 17, "■");
     drawLine(0, 74, 74, 74, "■");
     gotoxy(28, 22, "동물");
-    gotoxy(35, 22, "작물");
+    gotoxy(35, 22, "씨앗");
     gotoxy(42, 22, "DIY재료");
     gotoxy(49, 22, "나가기");
     gotoxy(49, 25, "");
@@ -1040,15 +1041,14 @@ void store() {
         gotoxy(21, 22, "방울토마토");
         gotoxy(28, 22, "고추");
         gotoxy(35, 22, "상추");
-        gotoxy(42, 22, "부추");
-        gotoxy(49, 22, "완두콩");
-        gotoxy(56, 22, "콩나물");
+        gotoxy(42, 22, "완두콩");
+        gotoxy(49, 22, "콩나물");
+
         gotoxy(21, 23, "$30000");
         gotoxy(28, 23, "$30000");
         gotoxy(35, 23, "$30000");
         gotoxy(42, 23, "$30000");
         gotoxy(49, 23, "$30000");
-        gotoxy(56, 23, "$30000");
         gotoxy(49, 25, "");
         printf("현재 돈: %d", currentStatus.money);
         while (1) {
@@ -1064,7 +1064,7 @@ void store() {
                     }
                 }
                 else if (choice == RIGHT) {
-                    if (menuChoose < 56) {
+                    if (menuChoose < 49) {
                         menuChoose += 7;
                     }
                 }
@@ -1154,21 +1154,6 @@ void store() {
             }
             break;
 
-        case 56:
-            if (checkStatus()) {
-                if (currentStatus.money >= 30000) {
-                    currentStatus.money -= 30000;
-                    system("cls");
-                    gotoxy(35, 25, "구매완료");
-                    inventoryStatus.plantNumber[5]++;
-                }
-                else {
-                    printf("돈이 부족합니다.");
-                }
-                currentStatus.work--;
-                Sleep(1000);
-            }
-            break;
 
         }
         break;
