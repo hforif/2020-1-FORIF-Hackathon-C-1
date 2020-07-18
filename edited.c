@@ -4,11 +4,21 @@
 #include <conio.h>
 #include <stdlib.h>
 #include <time.h>
+#include<mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 #define FILENAME "data.dat"
 #define LEFT 75
 #define RIGHT 77
 #define ENTER 13
+
+#define DOG_ESCAPE 5
+#define CAT_ESCAPE 100
+#define PANGUIN_ESCAPE 20
+#define HAMSTER_ESCAPE 2
+#define CHICKEN_ESCAPE 1
+
+#define MUSIC "music.wav"
 
 struct cs
 {
@@ -19,21 +29,25 @@ struct cs
 
 struct as
 {
-    int data;
-} animalStatus = {0};
+    int currentLove[5];
+    int win;
+    
+}   animalStatus = {{0,},0};
 
 struct ps
 {
     int day;
     int isPlanted;
+    int win;
 } plantStatus = {
-    .day = 0,
+    .day = 0, .win = 0
 };
 
 struct m
 {
     int diyNumber;
-} makingStatus = {0};
+    int win;
+} makingStatus = {0,0};
 
 struct g
 {
@@ -91,6 +105,7 @@ void drawModule();
 void initialize();
 void title();
 void story();
+void endingscreen();
 
 void animalGrowth();
 void plantGrowth();
@@ -346,12 +361,181 @@ void drawModule(int x, int y, const char *symbol[], int size)
 
 void animalGrowth()
 {
+    srand(time(NULL));
+    int escape = rand() % 100;
     system("cls");
-    gotoxy(0, 0, "animalGrowth");
-    currentStatus.work--;
+    int i, j;
+    int maxLove[5] = {30,100,80,50,40};
+    if (plantStatus.day == 0) {
+        drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+        gotoxy(4, 4, "1. 강아지");
+        gotoxy(4, 6, "2. 고양이");
+        gotoxy(4, 8, "3. 펭귄");
+        gotoxy(4, 10, "4. 햄스터");
+        gotoxy(4, 12, "5. 병아리");
+        gotoxy(4, 15, "어떤 동물과 놀아주시겠습니까? ");
+        
+        scanf("%d(1~5)", &j);
+        if(inventoryStatus.animalNumber[j-1] <= 0){
+            system("cls");
+             drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+            gotoxy(4,4,"");
+            printf("%s(이)가 없습니다.",inventoryStatus.animal[j-1]);
+            Sleep(1000);
+            return;
+        }
+        
+        
+        if(animalStatus.currentLove[j-1]==maxLove[j-1]){
+            animalStatus.win++;
+            animalStatus.currentLove[j-1] = 0;
+            inventoryStatus.animalNumber[j-1] -= 1;
+            int a = 0;
+             system("cls");
+             drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+            gotoxy(4,4,"동물은 어엿한 어른이 되었습니다 ...");
+            gotoxy(4,6,"");
+            printf("바이바이 %s...", inventoryStatus.animal[j-1]);
+        
+            // PlaySound(TEXT(MUSIC), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+            // while (1) {
+            //     a = _getch();
+            //     if (a != 0) {
+            //         PlaySound(NULL, 0, 0);
+            //         return;
+            //     }
+            Sleep(1000);
+            return;
+        }
+            
+        
+        if (j == 1) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+            drawLine(0, 0, 0, 17, "■");
+            drawLine(74, 0, 74, 17, "■");
+            drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "강아지와 놀아줬습니다!");
+            gotoxy(4, 6, "애정도가 10 상승.");
+            animalStatus.currentLove[j-1] += 10;
+            currentStatus.work--;
+            if(escape < DOG_ESCAPE){
+                system("cls");
+                drawLine(0, 0, 74, 0, "■");
+                drawLine(0, 0, 0, 17, "■");
+                drawLine(74, 0, 74, 17, "■");
+                drawLine(0, 74, 74, 74, "■");
+                gotoxy(4, 4, "과잉 보호는 일탈을 불러올 수 있습니다...");
+                gotoxy(4, 6, "그는 그의 삶을 찾아 떠납니다...");
+                inventoryStatus.animalNumber[j-1]--;
+                animalStatus.currentLove[j-1] = 0;
+            }
+        }
+        else if (j == 2) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+            drawLine(0, 0, 0, 17, "■");
+            drawLine(74, 0, 74, 17, "■");
+            drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "고양이와 놀아줬습니다!");
+            gotoxy(4, 6, "애정도가 10 상승.");
+            animalStatus.currentLove[j-1] += 10;
+            currentStatus.work--;
+            if(escape < CAT_ESCAPE){
+                system("cls");
+                drawLine(0, 0, 74, 0, "■");
+                drawLine(0, 0, 0, 17, "■");
+                drawLine(74, 0, 74, 17, "■");
+                drawLine(0, 74, 74, 74, "■");
+                gotoxy(4, 4, "과잉 보호는 일탈을 불러올 수 있습니다...");
+                gotoxy(4, 6, "그는 그의 삶을 찾아 떠납니다...");
+                inventoryStatus.animalNumber[j-1]--;
+                animalStatus.currentLove[j-1] = 0;
+            }
+        }
+        if (j == 3) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+            drawLine(0, 0, 0, 17, "■");
+            drawLine(74, 0, 74, 17, "■");
+            drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "펭귄과 놀아줬습니다!");
+            gotoxy(4, 6, "애정도가 10 상승.");
+            animalStatus.currentLove[j-1] += 10;
+            currentStatus.work--;
+            if(escape < PANGUIN_ESCAPE){
+                system("cls");
+                drawLine(0, 0, 74, 0, "■");
+                drawLine(0, 0, 0, 17, "■");
+                drawLine(74, 0, 74, 17, "■");
+                drawLine(0, 74, 74, 74, "■");
+                gotoxy(4, 4, "과잉 보호는 일탈을 불러올 수 있습니다...");
+                gotoxy(4, 6, "그는 그의 삶을 찾아 떠납니다...");
+                inventoryStatus.animalNumber[j-1]--;
+                animalStatus.currentLove[j-1] = 0;
+            }
+        }
+        if (j == 4) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+            drawLine(0, 0, 0, 17, "■");
+            drawLine(74, 0, 74, 17, "■");
+            drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "햄스터와 놀아줬습니다!");
+            gotoxy(4, 6, "애정도가 10 상승.");
+            animalStatus.currentLove[j-1] += 10;
+            currentStatus.work--;
+            if(escape < HAMSTER_ESCAPE){
+                system("cls");
+                drawLine(0, 0, 74, 0, "■");
+                drawLine(0, 0, 0, 17, "■");
+                drawLine(74, 0, 74, 17, "■");
+                drawLine(0, 74, 74, 74, "■");
+                gotoxy(4, 4, "과잉 보호는 일탈을 불러올 수 있습니다...");
+                gotoxy(4, 6, "그는 그의 삶을 찾아 떠납니다...");
+                inventoryStatus.animalNumber[j-1]--;
+                animalStatus.currentLove[j-1] = 0;
+            }
+        }
+        if (j == 5) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+            drawLine(0, 0, 0, 17, "■");
+            drawLine(74, 0, 74, 17, "■");
+            drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "병아리와 놀아줬습니다!");
+            gotoxy(4, 6, "애정도가 10 상승.");
+            animalStatus.currentLove[j-1] += 10;
+            currentStatus.work--;
+            if(escape < CHICKEN_ESCAPE){
+                system("cls");
+                drawLine(0, 0, 74, 0, "■");
+                drawLine(0, 0, 0, 17, "■");
+                drawLine(74, 0, 74, 17, "■");
+                drawLine(0, 74, 74, 74, "■");
+                gotoxy(4, 4, "과잉 보호는 일탈을 불러올 수 있습니다...");
+                gotoxy(4, 6, "그는 그의 삶을 찾아 떠납니다...");
+                inventoryStatus.animalNumber[j-1]--;
+                animalStatus.currentLove[j-1] = 0;
+            }
+        }
+    }    
     Sleep(1000);
     return;
 }
+
+
+
+
 void plantGrowth()
 {
     system("cls");
@@ -451,6 +635,7 @@ void plantGrowth()
         }
     }
     else if (currentStatus.day - plantStatus.day >= thanksgivingday[plantStatus.isPlanted] ) {
+        plantStatus.win++;
         system("cls");
             drawLine(0, 0, 74, 0, "■");
         drawLine(0, 0, 0, 17, "■");
@@ -521,6 +706,7 @@ void making(void)
                 drawLine(0, 74, 74, 74, "■");
                 if (k == 1)
                 {
+                   
                     gotoxy(4, 4, "망치를 만들었습니다!");
                     inventoryStatus.diyNumber[0]++;
                     currentStatus.work--;
@@ -537,7 +723,7 @@ void making(void)
                     inventoryStatus.diyNumber[2]++;
                     currentStatus.work--;
                 }
-                makingStatus.diyNumber++;
+                 makingStatus.win ++;
             }
             else gotoxy(4,4,"재료가 부족하여 만들지 못합니다.");
 
@@ -586,7 +772,7 @@ void making(void)
                         inventoryStatus.diyNumber[4]++;
                         currentStatus.work--;
                     }
-                    makingStatus.diyNumber++;
+                     makingStatus.win ++;
                 }
                 else
                     gotoxy(4, 4, "재료가 부족하여 만들지 못합니다.");
@@ -606,7 +792,7 @@ void making(void)
                     gotoxy(4, 4, "이글루를 만들었습니다!");
                     inventoryStatus.diyNumber[5]++;
                     currentStatus.work--;
-                    makingStatus.diyNumber++;
+                     makingStatus.win ++;
                 }
                 else
                     gotoxy(4, 4, "재료가 부족하여 만들지 못합니다.");
@@ -628,7 +814,7 @@ void making(void)
                     gotoxy(4, 4, "햄스터 쳇바퀴를 만들었습니다!");
                     inventoryStatus.diyNumber[6]++;
                     currentStatus.work--;
-                    makingStatus.diyNumber++;
+                    makingStatus.win++;
                 }
                 else
                     gotoxy(4, 4, "재료가 부족하여 만들지 못합니다.");
@@ -855,11 +1041,64 @@ void sleep()
 }
 void achievement()
 {
-    system("cls");
-    gotoxy(0, 0, "achievement");
-    Sleep(1000);
+    // system("cls");
+    //         drawLine(0, 0, 74, 0, "■");
+    //         drawLine(0, 0, 0, 17, "■");
+    //         drawLine(74, 0, 74, 17, "■");
+    //         drawLine(0, 74, 74, 74, "■");
+    //         gotoxy(4, 4, "1. 자연의 왕 드루이드");
+    //         gotoxy(4, 6, "2.캣타워");
+    //         gotoxy(4, 8, "3.이글루");
+    //         gotoxy(4, 10, "4.햄스터 쳇바퀴");
+    //         gotoxy(4, 12, "무엇을 만드실 건가요?:");
+    
+     system("cls");
+    
+        gotoxy(33, 15, "업   적   확   인");
+        gotoxy(18, 16, "----------------------------------------------------------------------------------------");
+        gotoxy(20, 17, "퀘스트 1            5마리 이상 동물 호감도 max");
+        printf("       (%d / 5)", animalStatus.win);
+        gotoxy(20, 19, "퀘스트 2            작물 10개 이상");
+        printf("       (%d / 10)", plantStatus.win);
+        gotoxy(20, 21, "퀘스트 3            diy 50개 이상 성공");
+        printf("       (%d / 50)", makingStatus.win);
+
+        if (animalStatus.win >= 5)
+            gotoxy(55, 17, "달성!");
+        else
+            gotoxy(55, 17, "미달성");
+
+
+
+        if (plantStatus.win>=10)
+            gotoxy(55, 19, "달성!");
+        else
+            gotoxy(55, 19, "미달성");
+
+        if (makingStatus.win >= 50)
+            gotoxy(55, 21, "달성!");
+        else
+            gotoxy(55, 21, "미달성");
+
+    Sleep(5000);
+    endingscreen();
+    Sleep(2000);
     return;
+
 }
+void endingscreen() {
+    if (animalStatus.win >= 5 && plantStatus.win>=10 && makingStatus.win >= 50 ){
+        system("cls");
+        gotoxy(0, 0, "");
+        gotoxy(4, 4, "모든 업적을 달성하셨습니다. 축하합니다!");
+        drawModule(2, 14, character2, 4);
+        drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+    }
+}
+
 void store() {
     if(!checkStatus()){
         return;
@@ -1391,7 +1630,11 @@ void saveAndExit()
 
 void initialize()
 {
-    currentStatus.money = 100000;
+    currentStatus.money = 13400000;
+
+    //animalStatus.win = 6;
+    //plantStatus.win = 11;
+    //makingStatus.win = 100;
 
     inventoryStatus.animal[0] = "강아지";
     inventoryStatus.animal[1] = "고양이";
