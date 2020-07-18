@@ -24,8 +24,11 @@ struct as
 
 struct ps
 {
-    int data;
-} plantStatus = {0};
+    int day;
+    int isPlanted;
+} plantStatus = {
+    .day = 0,
+};
 
 struct m
 {
@@ -99,6 +102,11 @@ void inventory();
 void saveAndExit();
 
 const char *character[4] = {"\\(*_*)", "(   (>", "(   )", "/   \\"};
+const char *character2[4] = {"( ^▽^)\n", "( /   )/\n", " )    )\n", "/     \\"};
+
+const char *wakedup[5]={"     ∧_∧","　　 ('ω')","　 ＿|　⊃／(＿＿_","／　└-(＿＿＿_／","￣￣￣￣￣￣￣"};
+const char *wakedupClear[5]={"                                 ","                                 ","                                 ","                                 ","                                 "};
+const char *sleeping[3]={"　＜⌒／`-._＿_","／＜_/＿＿＿＿／","￣￣￣￣￣￣￣"};
 
 int main()
 {
@@ -111,6 +119,24 @@ int main()
     int execute;
     int start = 3;
     int isX = 1;
+    int cnt1, cnt2, cnt4;
+    title();
+    while (!_kbhit())
+        ;
+
+    getchar();
+
+    system("cls");
+
+    story();
+
+    while (!_kbhit())
+        ;
+
+    getchar();
+
+    system("cls");
+
     while (1)
     {
         mainMenu();
@@ -328,10 +354,120 @@ void animalGrowth()
 void plantGrowth()
 {
     system("cls");
-    gotoxy(0, 0, "plantGrowth");
-    currentStatus.work--;
+    int i, j;
+    int thanksgivingday[5] = {3, 2, 200, 4, 1};
+    int price[5] = {60000, 40000,  100000000, 90000, 35000};
+    if (plantStatus.day == 0) {
+        drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+        gotoxy(4, 4, "1. 방울토마토");
+        gotoxy(4, 6, "2. 고추");
+        gotoxy(4, 8, "3. 상추");
+        gotoxy(4, 10, "4. 완두콩");
+        gotoxy(4, 12, "5. 콩나물");
+        gotoxy(4, 15, "어떤 작물을 키우시겠습니까? ");
+        
+        scanf("%d(1~5)", &j);
+        if(inventoryStatus.plantNumber[j-1] <= 0){
+            system("cls");
+             drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+            gotoxy(4,4,"");
+            printf("%s 씨앗이 없습니다.",inventoryStatus.plant[j-1]);
+            Sleep(1000);
+            return;
+        }
+        
+        
+        if (j == 1) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "방울토마토를 심었습니다!");
+            gotoxy(4, 6, "작물은 3일 뒤에 자랍니다.");
+            plantStatus.isPlanted = j-1;
+            inventoryStatus.plantNumber[0]--;
+            plantStatus.day = currentStatus.day;
+            currentStatus.work--;
+        }
+        else if (j == 2) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "고추를 심었습니다!");
+            gotoxy(4, 6, "작물은 2일 뒤에 자랍니다.");
+            plantStatus.isPlanted = j-1;
+            inventoryStatus.plantNumber[1]--;
+            plantStatus.day = currentStatus.day;
+            currentStatus.work--;
+        }
+        if (j == 3) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "상추를 심었습니다!");
+            gotoxy(4, 6, "작물은 200일 뒤에 자랍니다.");
+            plantStatus.isPlanted = j-1;
+            inventoryStatus.plantNumber[2]--;
+            plantStatus.day = currentStatus.day;
+            currentStatus.work--;
+        }
+        if (j == 4) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "완두콩을 심었습니다!");
+            gotoxy(4, 6, "작물은 4일 뒤에 자랍니다.");
+            plantStatus.isPlanted = j-1;
+            inventoryStatus.plantNumber[3]--;
+            plantStatus.day = currentStatus.day;
+            currentStatus.work--;
+        }
+        if (j == 5) {
+            system("cls");
+            drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+            gotoxy(4, 4, "콩나물을 심었습니다!");
+            gotoxy(4, 6, "작물은 1일 뒤에 자랍니다.");
+            plantStatus.isPlanted = j-1;
+            inventoryStatus.plantNumber[4]--;
+            plantStatus.day = currentStatus.day;
+            currentStatus.work--;
+        }
+    }
+    else if (currentStatus.day - plantStatus.day >= thanksgivingday[plantStatus.isPlanted] ) {
+        system("cls");
+            drawLine(0, 0, 74, 0, "■");
+        drawLine(0, 0, 0, 17, "■");
+        drawLine(74, 0, 74, 17, "■");
+        drawLine(0, 74, 74, 74, "■");
+        gotoxy(4, 4, "");
+        printf("이전의 작물이 다 자라 수확을 하여 %d원을 획득하였습니다.",price[plantStatus.isPlanted]);
+        currentStatus.money += price[plantStatus.isPlanted];
+        plantStatus.day = 0;
+    }
+    else {
+        system("cls");
+        gotoxy(4, 4, "작물이 아직 다 자라지 않았습니다.");
+        
+    }
     Sleep(1000);
     return;
+
 }
 
 //////////////////////making start
@@ -703,10 +839,17 @@ void game()
 void sleep()
 {
     system("cls");
-    gotoxy(0, 0, "sleep");
+    drawLine(0, 0, 74, 0, "■");
+    drawLine(0, 0, 0, 17, "■");
+    drawLine(74, 0, 74, 17, "■");
+    drawLine(0, 74, 74, 74, "■");
+    drawModule(30,10,sleeping,3);
     currentStatus.day++;
     currentStatus.work = 5;
-    Sleep(1000);
+    Sleep(800);
+    drawModule(30,10,wakedupClear,5);
+    drawModule(30,8,wakedup,5);
+    Sleep(500);
     return;
 }
 void achievement()
@@ -1318,7 +1461,7 @@ void initialize()
     inventoryStatus.ingredientNumber[6] = 0;
 }
 
-void title()
+void title() 
 {
     gotoxy(0, 0, "");
     drawLine(0, 0, 74, 0, "■");
@@ -1344,4 +1487,30 @@ void title()
         gotoxy(7, 16, "                                                                                         ");
         Sleep(400);
     }
+}
+
+void story()
+{
+
+    gotoxy(4, 1, "INTRO...");
+        Sleep(100);
+        gotoxy(4, 3, "안녕하세요! 힐링의 집에 오신 것을 환영합니다!");
+        Sleep(300);
+        gotoxy(4, 5, "힐링의 집에는 집돌이, 집순이 여러분을 위한 여러가지 활동이 준비되어 있습니다.");
+        Sleep(300);
+        gotoxy(4, 7, "다양한 동물 키우기, 작물 키우기부터 diy, 게임까지!!!");
+        Sleep(300);
+        gotoxy(4, 9, "한 번 활동을 할 때마다 체력 1이 소진되고, 모든 체력이 소진되면 잠이 듭니다! ");
+        Sleep(300);
+        gotoxy(4, 11, "다음날이 되면 다시 체력이 충전되어 다시 활동을 할 수 있습니다.");
+        Sleep(300);
+        gotoxy(4, 13, "동물 호감도 max가 되면 다양한 event가 준비되어 있으니 매일매일 동물을 잘 돌봐주세요!");
+        Sleep(300);
+        gotoxy(4, 15, "게임이나 작물 키우기를 통해 모은 돈으로 동물을 위한 diy를 만들 수 있습니다!");
+        Sleep(200);
+        gotoxy(4, 17, "게임 중 모든 업적을 달성하면 게임이 완료됩니다!");
+        Sleep(200);
+        gotoxy(4, 19, "그럼 이제 게임을 시작합니다!");
+        Sleep(100);
+        gotoxy(4, 21, "아무키나 누르십시오...");
 }
